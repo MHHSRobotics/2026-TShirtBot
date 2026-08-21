@@ -9,15 +9,15 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Drive extends SubsystemBase {
     public static class Constants {
         // The IDs for each of the motor controllers
-        public static final int leftMotor1Id = 3; //0
+        public static final int leftMotor1Id = 1; //0
         public static final int leftMotor2Id = 2; //1
-        public static final int rightMotor1Id = 1; //2
+        public static final int rightMotor1Id = 3; //2
         public static final int rightMotor2Id = 0; //3
 
         // Whether each motor is inverted
         public static final boolean leftMotor1Inverted = false;
         public static final boolean leftMotor2Inverted = false;
-        public static final boolean rightMotor1Inverted = false;
+        public static final boolean rightMotor1Inverted = true;
         public static final boolean rightMotor2Inverted = true;
     }
 
@@ -48,14 +48,12 @@ public class Drive extends SubsystemBase {
         
         drive = new DifferentialDrive(
                 (s) -> {
-                    //leftMotor1.set(s);
-                    //leftMotor2.set(s);
-                    //System.out.println(s);
+                    leftMotor1.set(s);
+                    leftMotor2.set(s);
                 },
                 (s) -> {
-                    //rightMotor1.set(s);
+                    rightMotor1.set(s);
                     rightMotor2.set(s);
-                    //System.out.println(s);
                 });
                 
     }
