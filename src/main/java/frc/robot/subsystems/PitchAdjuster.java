@@ -12,7 +12,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 public class PitchAdjuster extends SubsystemBase {
     public static class Constants {
         // Motor ID
-        private static final int id = 4;
+        private static final int id = 3;
 
         // Whether the motor is inverted
         private static final boolean inverted = false;

@@ -36,7 +36,7 @@ public class RobotContainer {
     private TurretCommands turretCommands;
     private PneumaticsCommands pneumaticsCommands;
 
-    public double speed = 0.55;
+    public double speed = 0.75;
 
     public RobotContainer() {
         // Initialize the subsystems
@@ -49,7 +49,8 @@ public class RobotContainer {
         // Initialize the subsystem commands
         driveCommands = new DriveCommands(drive);
         pitchAdjusterCommands = new PitchAdjusterCommands(pitchAdjuster);
-        shooterCommands = new ShooterCommands(shooter);
+        shooterCommands = new 
+        ShooterCommands(shooter);
         turretCommands = new TurretCommands(turret);
         pneumaticsCommands = new PneumaticsCommands(pneumatics);
 
@@ -60,12 +61,13 @@ public class RobotContainer {
 
     public void configureBindings() {
         drive.setDefaultCommand(driveCommands.drive(
-                () -> -MathUtil.applyDeadband(controller.getLeftY(), 0.1),
-                () -> -MathUtil.applyDeadband(controller.getLeftX(), 0.1)));
+                () -> -MathUtil.applyDeadband(controller.getLeftY(), 0.1)/1.5,
+                () -> -MathUtil.applyDeadband(controller.getLeftX(), 0.1)/1.5));
+
         pitchAdjuster.setDefaultCommand(
                 pitchAdjusterCommands.setSpeed(() -> MathUtil.applyDeadband(controller.getRightY(), 0.1) / 10));
-        // turret.setDefaultCommand(
-        //        turretCommands.setSpeed(() -> MathUtil.applyDeadband(controller.getRightX(), 0.1) / 10));
+        turret.setDefaultCommand(
+               turretCommands.setSpeed(() -> MathUtil.applyDeadband(controller.getRightX(), 0.1) / 10));
         controller
                 .R2()
                 .onTrue(shooterCommands.setSpeed(() -> SmartDashboard.getNumber("Speed", 0.5)))

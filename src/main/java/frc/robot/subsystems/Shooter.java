@@ -11,7 +11,7 @@ import com.ctre.phoenix6.signals.InvertedValue;
 public class Shooter extends SubsystemBase {
     public static class Constants {
         // ID of the TalonFX
-        public static final int motorId = 5;
+        public static final int motorId = 4;
 
         // Whether the motor should be inverted
         public static final boolean inverted = false;

@@ -11,7 +11,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 public class Turret extends SubsystemBase {
     public static class Constants {
         // The ID of the TalonFX
-        public static final int motorId = 6;
+        public static final int motorId = 5;
 
         // Whether the motor should be inverted
         public static final boolean motorInverted = true;

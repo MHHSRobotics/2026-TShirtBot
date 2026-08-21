@@ -7,19 +7,21 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Pneumatics extends SubsystemBase {
     public static class Constants {
-        public static final int id = 0;
+        public static final int id = 1;
+        public static final int channlePort = 14;
     }
 
     private Solenoid solenoid;
     private Compressor compressor;
 
     public Pneumatics() {
-        solenoid = new Solenoid(PneumaticsModuleType.REVPH, Constants.id);
+        solenoid = new Solenoid(PneumaticsModuleType.REVPH, Constants.channlePort);
         compressor = new Compressor(1, PneumaticsModuleType.REVPH);
         compressor.enableDigital();
     }
 
     public void enable() {
+        System.out.println("A");
         solenoid.set(true);
     }
 
