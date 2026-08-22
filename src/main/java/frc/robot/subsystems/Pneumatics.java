@@ -21,7 +21,7 @@ public class Pneumatics extends SubsystemBase {
     }
 
     public void enable() {
-        System.out.println("A");
+        
         solenoid.set(true);
     }
 

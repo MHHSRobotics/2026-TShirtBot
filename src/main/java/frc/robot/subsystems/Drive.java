@@ -62,8 +62,7 @@ public class Drive extends SubsystemBase {
     // Sets the forward speed and rotation for the bot. drive.arcadeDrive converts these values into speeds for the left
     // and right sides.
     public void setSpeed(double speed, double rotation) {
-        System.out.println(rotation);
-        System.out.println(speed);
+        
         drive.arcadeDrive(speed, rotation);
         
     }
