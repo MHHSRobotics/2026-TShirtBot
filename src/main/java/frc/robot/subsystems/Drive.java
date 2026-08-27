@@ -9,10 +9,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Drive extends SubsystemBase {
     public static class Constants {
         // The IDs for each of the motor controllers
-        public static final int leftMotor1Id = 1; //0
-        public static final int leftMotor2Id = 2; //1
-        public static final int rightMotor1Id = 3; //2
-        public static final int rightMotor2Id = 0; //3
+        public static final int leftMotor1Id = 1; // 0
+        public static final int leftMotor2Id = 2; // 1
+        public static final int rightMotor1Id = 3; // 2
+        public static final int rightMotor2Id = 0; // 3
 
         // Whether each motor is inverted
         public static final boolean leftMotor1Inverted = false;
@@ -45,7 +45,7 @@ public class Drive extends SubsystemBase {
 
         // Initialize the differential drive. This takes in two lambdas: one to set the speed of the left side, and one
         // for the right side. The DifferentialDrive class uses these to control the bot.
-        
+
         drive = new DifferentialDrive(
                 (s) -> {
                     leftMotor1.set(s);
@@ -55,15 +55,12 @@ public class Drive extends SubsystemBase {
                     rightMotor1.set(s);
                     rightMotor2.set(s);
                 });
-                
     }
-    
 
     // Sets the forward speed and rotation for the bot. drive.arcadeDrive converts these values into speeds for the left
     // and right sides.
     public void setSpeed(double speed, double rotation) {
-        
+
         drive.arcadeDrive(speed, rotation);
-        
     }
 }

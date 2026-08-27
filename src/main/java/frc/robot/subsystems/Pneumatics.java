@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import org.littletonrobotics.junction.Logger;
+
 public class Pneumatics extends SubsystemBase {
     public static class Constants {
         public static final int id = 1;
@@ -17,15 +19,23 @@ public class Pneumatics extends SubsystemBase {
     public Pneumatics() {
         solenoid = new Solenoid(PneumaticsModuleType.REVPH, Constants.channlePort);
         compressor = new Compressor(1, PneumaticsModuleType.REVPH);
-        compressor.enableDigital();
+
+        compressor.enableAnalog(95, 120);
+
+        // compressor.enableDigital();
     }
 
     public void enable() {
-        
+
         solenoid.set(true);
     }
 
     public void disable() {
         solenoid.set(false);
+    }
+
+    @Override
+    public void periodic() {
+        Logger.recordOutput("pressure", compressor.getPressure());
     }
 }

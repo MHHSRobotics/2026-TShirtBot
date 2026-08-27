@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
-import com.ctre.phoenix6.signals.NeutralModeValue;
 
 // THe pitch adjuster uses a single SparkMAX controlling a Neo motor. PID is not necessary here, since we don't have an
 // encoder, and precise aiming is not needed for the t-shirt bot.
