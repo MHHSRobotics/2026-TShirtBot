@@ -6,6 +6,7 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 
+import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.LoggedNetworkNumber;
 
 // The shooter subsystem uses a single TalonFX controlling a Falcon 500 motor, which powers a pair of flywheels. No PID
@@ -14,6 +15,7 @@ public class Shooter extends SubsystemBase {
     public static class Constants {
         // ID of the TalonFX
         public static final int motorId = 4;
+        public static final int baseMult = 100;
 
         // Whether the motor should be inverted
         public static final boolean inverted = false;
@@ -47,7 +49,7 @@ public class Shooter extends SubsystemBase {
 
     public double getSpeedFraction() {
         // 80 Is the max RPS for the motor
-        return Math.abs(motor.getVelocity().getValueAsDouble() / (70 * flywheelSpeed.get()));
+        return Math.abs(motor.getVelocity().getValueAsDouble() / (Constants.baseMult * flywheelSpeed.get()));
     }
 
     public void setSpinning(boolean on) {
@@ -56,6 +58,9 @@ public class Shooter extends SubsystemBase {
 
     @Override
     public void periodic() {
+        Logger.recordOutput("flywheels/currentSpeed", motor.getVelocity().getValueAsDouble());
+        Logger.recordOutput("flywheels/targetSpeed", Constants.baseMult*flywheelSpeed.get());
+
         if (spinning) {
             motor.set(flywheelSpeed.get());
         } else {

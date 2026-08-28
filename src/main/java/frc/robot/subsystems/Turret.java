@@ -12,6 +12,7 @@ public class Turret extends SubsystemBase {
     public static class Constants {
         // The ID of the TalonFX
         public static final int motorId = 5;
+        public static final int encoderId = 1;
 
         // Whether the motor should be inverted
         public static final boolean motorInverted = true;
@@ -23,7 +24,7 @@ public class Turret extends SubsystemBase {
     public Turret() {
         // Initialize the TalonFX
         turretMotor = new TalonFX(Constants.motorId);
-
+        
         // Creates the TalonFX config
         TalonFXConfiguration config = new TalonFXConfiguration();
 
