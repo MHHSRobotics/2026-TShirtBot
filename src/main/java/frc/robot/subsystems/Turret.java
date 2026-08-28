@@ -24,7 +24,7 @@ public class Turret extends SubsystemBase {
     public Turret() {
         // Initialize the TalonFX
         turretMotor = new TalonFX(Constants.motorId);
-        
+
         // Creates the TalonFX config
         TalonFXConfiguration config = new TalonFXConfiguration();
 

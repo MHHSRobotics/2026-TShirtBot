@@ -39,6 +39,6 @@ public class Pneumatics extends SubsystemBase {
     @Override
     public void periodic() {
         Logger.recordOutput("pneumatics/pressure", compressor.getPressure());
-        Logger.recordOutput("pneumatics/ready", (compressor.getPressure()/Constants.maxPressure)>=.9);
+        Logger.recordOutput("pneumatics/ready", (compressor.getPressure() / Constants.maxPressure) >= .9);
     }
 }

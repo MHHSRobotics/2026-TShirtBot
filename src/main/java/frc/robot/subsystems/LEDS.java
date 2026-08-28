@@ -38,19 +38,20 @@ public class LEDS extends SubsystemBase {
 
     public void setChargeLeds(double amount) {
 
-        //The equation held in indexCalcHolder is essentially the flipped index from i after the topLength
+        // The equation held in indexCalcHolder is essentially the flipped index from i after the topLength
         // this was done in leu of how it was wired, which was back to front on one side,
         // then front to back on the other side and vise versa for the bottom row.
 
-        for (int i =1; i<= chargeLength; i++){
-            if (i <= topLength ){
+        for (int i = 1; i < chargeLength; i++) {
+            if (i <= topLength) {
                 indexCalcHolder = i;
-            }else if ( i <= topLength*2){
-                indexCalcHolder = Math.abs(i-topLength*2);//inverted
-            }else if (i <= topLength*2 + bottomLength){
-                indexCalcHolder = Math.abs(i-topLength*2);
-            }else if (i <= topLength*2 + bottomLength*2){
-                indexCalcHolder = Math.abs(i-topLength*2-bottomLength*2);//inverted
+            } else if (i <= topLength * 2) {
+                indexCalcHolder = Math.abs(i - topLength * 2); // inverted
+                System.out.println(indexCalcHolder);
+            } else if (i <= topLength * 2 + bottomLength) {
+                indexCalcHolder = Math.abs(i - topLength * 2);
+            } else if (i <= topLength * 2 + bottomLength * 2) {
+                indexCalcHolder = Math.abs(i - topLength * 2 - bottomLength * 2); // inverted
             }
 
             if (indexCalcHolder > topLength * amount) {
@@ -64,8 +65,9 @@ public class LEDS extends SubsystemBase {
                     mainLEDBuffer.setRGB(i, 255, 0, 0);
                 }
             }
+
+            // mainLEDBuffer.setRGB(i, 255, 255, 255);
         }
-        
     }
 
     @Override

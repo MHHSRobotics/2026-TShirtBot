@@ -15,7 +15,7 @@ public class Shooter extends SubsystemBase {
     public static class Constants {
         // ID of the TalonFX
         public static final int motorId = 4;
-        public static final int baseMult = 100;
+        public static final int baseMult = 80;
 
         // Whether the motor should be inverted
         public static final boolean inverted = false;
@@ -59,7 +59,7 @@ public class Shooter extends SubsystemBase {
     @Override
     public void periodic() {
         Logger.recordOutput("flywheels/currentSpeed", motor.getVelocity().getValueAsDouble());
-        Logger.recordOutput("flywheels/targetSpeed", Constants.baseMult*flywheelSpeed.get());
+        Logger.recordOutput("flywheels/targetSpeed", Constants.baseMult * flywheelSpeed.get());
 
         if (spinning) {
             motor.set(flywheelSpeed.get());
