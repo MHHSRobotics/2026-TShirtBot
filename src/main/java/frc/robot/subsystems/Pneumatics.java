@@ -11,6 +11,8 @@ public class Pneumatics extends SubsystemBase {
     public static class Constants {
         public static final int id = 1;
         public static final int channlePort = 14;
+        public static final int maxPressure = 120;
+        public static final int minPressure = 95;
     }
 
     private Solenoid solenoid;
@@ -20,7 +22,7 @@ public class Pneumatics extends SubsystemBase {
         solenoid = new Solenoid(PneumaticsModuleType.REVPH, Constants.channlePort);
         compressor = new Compressor(1, PneumaticsModuleType.REVPH);
 
-        compressor.enableAnalog(95, 120);
+        compressor.enableAnalog(Constants.minPressure, Constants.maxPressure);
 
         // compressor.enableDigital();
     }
@@ -36,6 +38,7 @@ public class Pneumatics extends SubsystemBase {
 
     @Override
     public void periodic() {
-        Logger.recordOutput("pressure", compressor.getPressure());
+        Logger.recordOutput("pneumatics/pressure", compressor.getPressure());
+        Logger.recordOutput("pneumatics/ready", (compressor.getPressure()/Constants.maxPressure)>=.9);
     }
 }
