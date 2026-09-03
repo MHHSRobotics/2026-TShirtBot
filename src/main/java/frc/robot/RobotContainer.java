@@ -11,6 +11,8 @@ import frc.robot.commands.PitchAdjusterCommands;
 import frc.robot.commands.PneumaticsCommands;
 import frc.robot.commands.ShooterCommands;
 import frc.robot.commands.TurretCommands;
+import frc.robot.io.EncoderIOCANcoder;
+import frc.robot.io.MotorIOTalonFX;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.LEDS;
 import frc.robot.subsystems.PitchAdjuster;
@@ -50,17 +52,20 @@ public class RobotContainer {
         }
 
         if (Constants.pitchAdjusterEnabled) {
-            pitchAdjuster = new PitchAdjuster();
+            pitchAdjuster = new PitchAdjuster(
+                    new MotorIOTalonFX(PitchAdjuster.Constants.motorId, "pitchAdjuster", "pitchAdjuster"),
+                    new EncoderIOCANcoder(PitchAdjuster.Constants.encoderId, "pitchEncoder", "pitchAdjuster"));
+
             pitchAdjusterCommands = new PitchAdjusterCommands(pitchAdjuster);
         }
 
         if (Constants.shooterEnabled) {
-            shooter = new Shooter();
+            shooter = new Shooter(new MotorIOTalonFX(Shooter.Constants.motorId, "shooter", "shooter"));
             shooterCommands = new ShooterCommands(shooter);
         }
 
         if (Constants.turretEnabled) {
-            turret = new Turret();
+            turret = new Turret(new MotorIOTalonFX(Turret.Constants.motorId, "turret", "turret"));
             turretCommands = new TurretCommands(turret);
         }
 
@@ -87,12 +92,12 @@ public class RobotContainer {
 
         if (Constants.pitchAdjusterEnabled) {
             pitchAdjuster.setDefaultCommand(
-                    pitchAdjusterCommands.setSpeed(() -> MathUtil.applyDeadband(controller.getRightY(), 0.1) / 10));
+                    pitchAdjusterCommands.setGoal(() -> MathUtil.applyDeadband(controller.getRightY(), 0.1)));
         }
 
         if (Constants.turretEnabled) {
             turret.setDefaultCommand(
-                    turretCommands.setSpeed(() -> MathUtil.applyDeadband(controller.getRightX(), 0.1) / 10));
+                    turretCommands.setSpeed(() -> MathUtil.applyDeadband(controller.getRightX(), 0.1)));
         }
         if (Constants.shooterEnabled) {
             controller

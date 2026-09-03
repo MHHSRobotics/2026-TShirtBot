@@ -17,9 +17,11 @@ public class LEDS extends SubsystemBase {
 
     public static int chargeUp = 4;
 
-    public static int chargeLength = 119; // is 120 but added buffer incase miscalculation
-    public static int topLength = 36;
-    public static int bottomLength = 24;
+    public static int chargeLength = 131; // is 120 but added buffer incase miscalculation
+    public static int topLength1 = 36;
+    public static int topLength2 = 36;
+    public static int bottomLength1 = 24;
+    public static int bottomLength2 = 24;
     public static int indexCalcHolder;
 
     /** Creates a new LEDS. */
@@ -43,23 +45,23 @@ public class LEDS extends SubsystemBase {
         // then front to back on the other side and vise versa for the bottom row.
 
         for (int i = 1; i < chargeLength; i++) {
-            if (i <= topLength) {
+            if (i <= topLength1) {
                 indexCalcHolder = i;
-            } else if (i <= topLength * 2) {
-                indexCalcHolder = Math.abs(i - topLength * 2); // inverted
-                System.out.println(indexCalcHolder);
-            } else if (i <= topLength * 2 + bottomLength) {
-                indexCalcHolder = Math.abs(i - topLength * 2);
-            } else if (i <= topLength * 2 + bottomLength * 2) {
-                indexCalcHolder = Math.abs(i - topLength * 2 - bottomLength * 2); // inverted
+            } else if (i <= topLength1 + topLength2) {
+                indexCalcHolder = Math.abs(i - topLength1 - topLength2) + 1; // inverted
+
+            } else if (i <= topLength1 + topLength2 + bottomLength1) {
+                indexCalcHolder = i - topLength1 - topLength2;
+            } else if (i <= topLength1 + topLength2 + bottomLength1 + bottomLength2) {
+                indexCalcHolder = Math.abs(i - topLength1 - topLength2 - bottomLength1 - bottomLength2) + 1; // inverted
             }
 
-            if (indexCalcHolder > topLength * amount) {
+            if (indexCalcHolder > topLength1 * amount) {
                 mainLEDBuffer.setRGB(i, 0, 0, 0);
             } else {
-                if (indexCalcHolder < topLength / 3.) {
+                if (indexCalcHolder < topLength1 / 3.) {
                     mainLEDBuffer.setRGB(i, 0, 255, 0);
-                } else if (indexCalcHolder < topLength * 2. / 3) {
+                } else if (indexCalcHolder < topLength1 * 2. / 3) {
                     mainLEDBuffer.setRGB(i, 255, 255, 0);
                 } else {
                     mainLEDBuffer.setRGB(i, 255, 0, 0);

@@ -2,12 +2,10 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.InvertedValue;
-
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.LoggedNetworkNumber;
+
+import frc.robot.io.MotorIO;
 
 // The shooter subsystem uses a single TalonFX controlling a Falcon 500 motor, which powers a pair of flywheels. No PID
 // is required since flywheels don't need to have a precise velocity.
@@ -25,21 +23,14 @@ public class Shooter extends SubsystemBase {
     public LoggedNetworkNumber flywheelSpeed = new LoggedNetworkNumber("flywheels/speed", .1);
 
     // The motor controller
-    private final TalonFX motor;
+    private final MotorIO shooterMotor;
 
-    public Shooter() {
-        // Initialize the TalonFX
-        motor = new TalonFX(Constants.motorId);
+    public Shooter(MotorIO motor) {
 
-        // Create config for the TalonFX
-        TalonFXConfiguration config = new TalonFXConfiguration();
+        shooterMotor = motor;
 
         // Sets the inverted value for the config
-        config.MotorOutput.Inverted =
-                Constants.inverted ? InvertedValue.Clockwise_Positive : InvertedValue.CounterClockwise_Positive;
-
-        // Applies the config to the TalonFX
-        motor.getConfigurator().apply(config);
+        shooterMotor.setInverted(Constants.inverted);
     }
 
     // Sets the speed of the Falcon motor
@@ -49,7 +40,7 @@ public class Shooter extends SubsystemBase {
 
     public double getSpeedFraction() {
         // 80 Is the max RPS for the motor
-        return Math.abs(motor.getVelocity().getValueAsDouble() / (Constants.baseMult * flywheelSpeed.get()));
+        return Math.abs(shooterMotor.getInputs().velocity / (Constants.baseMult * flywheelSpeed.get()));
     }
 
     public void setSpinning(boolean on) {
@@ -58,14 +49,15 @@ public class Shooter extends SubsystemBase {
 
     @Override
     public void periodic() {
-        Logger.recordOutput("flywheels/currentSpeed", motor.getVelocity().getValueAsDouble());
+        Logger.recordOutput("flywheels/currentSpeed", shooterMotor.getInputs().velocity);
         Logger.recordOutput("flywheels/targetSpeed", Constants.baseMult * flywheelSpeed.get());
 
         if (spinning) {
-            motor.set(flywheelSpeed.get());
+            shooterMotor.setDutyCycle(flywheelSpeed.get());
         } else {
-            motor.set(0);
+            shooterMotor.setDutyCycle(0);
         }
-        // System.out.println(Constants.flywheelSpeed.get());
+
+        shooterMotor.update();
     }
 }

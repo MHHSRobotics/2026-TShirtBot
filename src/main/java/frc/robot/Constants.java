@@ -40,10 +40,10 @@ public final class Constants {
     public static final boolean ctreProLicensedWarning = true; // Whether to warn if a CTRE device isn't pro licensed
 
     // Toggles for susbsytems
-    public static final boolean tankDriveEnabled = true;
-    public static final boolean shooterEnabled = true;
+    public static final boolean tankDriveEnabled = false;
+    public static final boolean shooterEnabled = false;
     public static final boolean pitchAdjusterEnabled = true;
-    public static final boolean turretEnabled = true;
-    public static final boolean pneumaticsEnabled = true;
-    public static final boolean ledsEnabled = true;
+    public static final boolean turretEnabled = false;
+    public static final boolean pneumaticsEnabled = false;
+    public static final boolean ledsEnabled = false;
 }
