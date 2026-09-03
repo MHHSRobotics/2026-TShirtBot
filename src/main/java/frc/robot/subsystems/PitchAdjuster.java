@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -22,7 +23,7 @@ public class PitchAdjuster extends SubsystemBase {
         public static final double maxUp = Units.degreesToRadians(80);
         public static final double maxDown = 0;
 
-        public static final LoggedNetworkNumber kP = new LoggedNetworkNumber("pitch/kP", 2);
+        public static final LoggedNetworkNumber kP = new LoggedNetworkNumber("pitch/kP", 4);
         public static final LoggedNetworkNumber kG = new LoggedNetworkNumber("pitch/kG", 0);
         public static final LoggedNetworkNumber kD = new LoggedNetworkNumber("pitch/kD", 0);
         public static final LoggedNetworkNumber kS = new LoggedNetworkNumber("pitch/KS", 4);
@@ -51,7 +52,7 @@ public class PitchAdjuster extends SubsystemBase {
     // Sets the goal of the motor to the go
     public void setGoal(double go) {
 
-        pitchMotor.setGoalWithCurrentMagic(0);
+        goal = MathUtil.clamp(goal += go,Constants.maxDown,Constants.maxUp);
 
         // System.out.println(pitchMotor.getInputs().setpoint);
     }
@@ -65,6 +66,8 @@ public class PitchAdjuster extends SubsystemBase {
 
         Logger.recordOutput("pitch/encoderValue", pitchMotor.getInputs().position);
         Logger.recordOutput("pitch/setpointValue", pitchMotor.getInputs().setpoint);
+
+        pitchMotor.setGoalWithCurrentMagic(goal);
 
         pitchMotor.setkD(Constants.kD.get());
         pitchMotor.setkP(Constants.kP.get());
