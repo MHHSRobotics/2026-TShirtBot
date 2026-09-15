@@ -16,9 +16,9 @@ public class PitchAdjusterCommands {
 
     // Returns a command that sets the speed of the pitch adjuster. Running the command sets the speed to whatever
     // speed.getAsDouble() returns.
-    public Command setGoal(DoubleSupplier goal) {
+    public Command incrementGoal(DoubleSupplier goal) {
 
-        return Commands.runOnce(() -> pitchAdjuster.setGoal(goal.getAsDouble()), pitchAdjuster);
+        return Commands.runOnce(() -> pitchAdjuster.incrementGoal(goal.getAsDouble()), pitchAdjuster);
     }
 
     // Returns a command that stops the pitch adjuster

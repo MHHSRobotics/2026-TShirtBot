@@ -91,13 +91,18 @@ public class RobotContainer {
         }
 
         if (Constants.pitchAdjusterEnabled) {
-            pitchAdjuster.setDefaultCommand(
-                    pitchAdjusterCommands.setGoal(() -> MathUtil.applyDeadband(controller.getRightY(), 0.1)));
+            pitchAdjuster.setDefaultCommand(pitchAdjusterCommands.incrementGoal(
+                    () -> -MathUtil.applyDeadband(controller.getRightY(), 0.1) / 100));
         }
+
+        // if (Constants.pitchAdjusterEnabled) {
+        //     pitchAdjuster.setDefaultCommand(
+        //             pitchAdjusterCommands.incrementGoal(() -> MathUtil.applyDeadband(controller.getRightY(), 0.1)));
+        // }
 
         if (Constants.turretEnabled) {
             turret.setDefaultCommand(
-                    turretCommands.setSpeed(() -> MathUtil.applyDeadband(controller.getRightX(), 0.1)));
+                    turretCommands.setSpeed(() -> MathUtil.applyDeadband(controller.getRightX(), 0.1) / 10));
         }
         if (Constants.shooterEnabled) {
             controller

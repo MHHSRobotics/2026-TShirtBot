@@ -28,7 +28,7 @@ public class Turret extends SubsystemBase {
 
     // Sets the speed of the Falcon motor
     public void setSpeed(double speed) {
-        turretMotor.setDutyCycle(speed);
+        turretMotor.setDutyCycle(-speed);
     }
 
     @Override

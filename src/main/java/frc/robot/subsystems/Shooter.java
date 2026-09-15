@@ -20,7 +20,7 @@ public class Shooter extends SubsystemBase {
     }
 
     public boolean spinning = false;
-    public LoggedNetworkNumber flywheelSpeed = new LoggedNetworkNumber("flywheels/speed", .1);
+    public LoggedNetworkNumber flywheelSpeed = new LoggedNetworkNumber("flywheels/speed", .65);
 
     // The motor controller
     private final MotorIO shooterMotor;

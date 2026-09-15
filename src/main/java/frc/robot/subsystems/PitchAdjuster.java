@@ -17,16 +17,17 @@ public class PitchAdjuster extends SubsystemBase {
         // Motor ID
         public static final int motorId = 3;
         public static final int encoderId = 6;
-        public static final double encoderOffset = 0;
-        public static final double gearRatio = 64;
 
+        public static final double encoderOffset = -0.279184;
+        public static final double gearRatio = 64;
         public static final double maxUp = Units.degreesToRadians(80);
         public static final double maxDown = 0;
 
-        public static final LoggedNetworkNumber kP = new LoggedNetworkNumber("pitch/kP", 4);
+        public static final LoggedNetworkNumber kP = new LoggedNetworkNumber("pitch/kP", 10);
         public static final LoggedNetworkNumber kG = new LoggedNetworkNumber("pitch/kG", 0);
-        public static final LoggedNetworkNumber kD = new LoggedNetworkNumber("pitch/kD", 0);
+        public static final LoggedNetworkNumber kD = new LoggedNetworkNumber("pitch/kD", 5);
         public static final LoggedNetworkNumber kS = new LoggedNetworkNumber("pitch/KS", 4);
+        public static final LoggedNetworkNumber fakeGoal = new LoggedNetworkNumber("pitch/psuedoGoal", .5);
 
         // Whether the motor is inverted
         public static final boolean inverted = false;
@@ -52,9 +53,15 @@ public class PitchAdjuster extends SubsystemBase {
     // Sets the goal of the motor to the go
     public void setGoal(double go) {
 
-        goal = MathUtil.clamp(goal += go,Constants.maxDown,Constants.maxUp);
+        goal = go;
+    }
 
-        // System.out.println(pitchMotor.getInputs().setpoint);
+    public void incrementGoal(double go) {
+
+        goal = MathUtil.clamp(goal + go, Constants.maxDown, Constants.maxUp);
+
+        // System.out.println(goal);
+        // goal = go / 10;
     }
 
     public void stop() {
@@ -66,8 +73,9 @@ public class PitchAdjuster extends SubsystemBase {
 
         Logger.recordOutput("pitch/encoderValue", pitchMotor.getInputs().position);
         Logger.recordOutput("pitch/setpointValue", pitchMotor.getInputs().setpoint);
-
-        pitchMotor.setGoalWithCurrentMagic(goal);
+        //System.out.println(Constants.fakeGoal.get());
+        pitchMotor.setGoalWithCurrent(goal);
+        // pitchMotor.setDutyCycle(goal);
 
         pitchMotor.setkD(Constants.kD.get());
         pitchMotor.setkP(Constants.kP.get());
