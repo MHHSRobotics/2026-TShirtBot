@@ -21,13 +21,13 @@ public class PitchAdjuster extends SubsystemBase {
         public static final double encoderOffset = -0.279184;
         public static final double gearRatio = 64;
         public static final double maxUp = Units.degreesToRadians(80);
-        public static final double maxDown = 0;
+        public static final double maxDown = Units.degreesToRadians(-10);
 
-        public static final LoggedNetworkNumber kP = new LoggedNetworkNumber("pitch/kP", 10);
+        public static final LoggedNetworkNumber kP = new LoggedNetworkNumber("pitch/kP", 20);
         public static final LoggedNetworkNumber kG = new LoggedNetworkNumber("pitch/kG", 0);
         public static final LoggedNetworkNumber kD = new LoggedNetworkNumber("pitch/kD", 5);
         public static final LoggedNetworkNumber kS = new LoggedNetworkNumber("pitch/KS", 4);
-        public static final LoggedNetworkNumber fakeGoal = new LoggedNetworkNumber("pitch/psuedoGoal", .5);
+        public static final LoggedNetworkNumber fakeGoal = new LoggedNetworkNumber("pitch/psuedoGoal", 0);
 
         // Whether the motor is inverted
         public static final boolean inverted = false;
@@ -60,7 +60,7 @@ public class PitchAdjuster extends SubsystemBase {
 
         goal = MathUtil.clamp(goal + go, Constants.maxDown, Constants.maxUp);
 
-        // System.out.println(goal);
+        System.out.println(goal);
         // goal = go / 10;
     }
 
@@ -73,7 +73,7 @@ public class PitchAdjuster extends SubsystemBase {
 
         Logger.recordOutput("pitch/encoderValue", pitchMotor.getInputs().position);
         Logger.recordOutput("pitch/setpointValue", pitchMotor.getInputs().setpoint);
-        //System.out.println(Constants.fakeGoal.get());
+        // System.out.println(Constants.fakeGoal.get());
         pitchMotor.setGoalWithCurrent(goal);
         // pitchMotor.setDutyCycle(goal);
 

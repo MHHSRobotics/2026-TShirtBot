@@ -45,5 +45,5 @@ public final class Constants {
     public static final boolean pitchAdjusterEnabled = true;
     public static final boolean turretEnabled = true;
     public static final boolean pneumaticsEnabled = true;
-    public static final boolean ledsEnabled = false;
+    public static final boolean ledsEnabled = true;
 }
