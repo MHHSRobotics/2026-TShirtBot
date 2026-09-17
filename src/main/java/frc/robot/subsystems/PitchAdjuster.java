@@ -20,7 +20,7 @@ public class PitchAdjuster extends SubsystemBase {
 
         public static final double encoderOffset = -0.279184;
         public static final double gearRatio = 64;
-        public static final double maxUp = Units.degreesToRadians(80);
+        public static final double maxUp = Units.degreesToRadians(90);
         public static final double maxDown = Units.degreesToRadians(-10);
 
         public static final LoggedNetworkNumber kP = new LoggedNetworkNumber("pitch/kP", 20);
@@ -59,9 +59,6 @@ public class PitchAdjuster extends SubsystemBase {
     public void incrementGoal(double go) {
 
         goal = MathUtil.clamp(goal + go, Constants.maxDown, Constants.maxUp);
-
-        System.out.println(goal);
-        // goal = go / 10;
     }
 
     public void stop() {
@@ -73,9 +70,8 @@ public class PitchAdjuster extends SubsystemBase {
 
         Logger.recordOutput("pitch/encoderValue", pitchMotor.getInputs().position);
         Logger.recordOutput("pitch/setpointValue", pitchMotor.getInputs().setpoint);
-        // System.out.println(Constants.fakeGoal.get());
+
         pitchMotor.setGoalWithCurrent(goal);
-        // pitchMotor.setDutyCycle(goal);
 
         pitchMotor.setkD(Constants.kD.get());
         pitchMotor.setkP(Constants.kP.get());

@@ -13,7 +13,7 @@ public class Shooter extends SubsystemBase {
     public static class Constants {
         // ID of the TalonFX
         public static final int motorId = 4;
-        public static final int baseMult = 80;
+        public static final int baseMult = 500;// 500 is the max RPS for the motor
 
         // Whether the motor should be inverted
         public static final boolean inverted = false;
@@ -39,7 +39,6 @@ public class Shooter extends SubsystemBase {
     // }
 
     public double getSpeedFraction() {
-        // 80 Is the max RPS for the motor
         return Math.abs(shooterMotor.getInputs().velocity / (Constants.baseMult * flywheelSpeed.get()));
     }
 

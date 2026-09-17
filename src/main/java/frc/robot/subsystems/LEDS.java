@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.util.Random;
+
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -15,13 +17,13 @@ public class LEDS extends SubsystemBase {
     public AddressableLEDBuffer mainLEDBuffer;
     private Shooter shooter;
 
-    public static int chargeUp = 4;
+    public static int ledID = 4;
 
     public static int chargeLength = 131; // is 120 but added buffer incase miscalculation
-    public static int topLength1 = 36;
-    public static int topLength2 = 36;
-    public static int bottomLength1 = 24;
-    public static int bottomLength2 = 24;
+    public static int topLength1 = 33;
+    public static int topLength2 = 32;
+    public static int bottomLength1 = 21;
+    public static int bottomLength2 = 23;
     public static int indexCalcHolder;
 
     /** Creates a new LEDS. */
@@ -29,7 +31,7 @@ public class LEDS extends SubsystemBase {
 
         this.shooter = shooterSubsystem;
 
-        chargeUpLED = new AddressableLED(chargeUp);
+        chargeUpLED = new AddressableLED(ledID);
 
         mainLEDBuffer = new AddressableLEDBuffer(chargeLength);
 
@@ -43,33 +45,27 @@ public class LEDS extends SubsystemBase {
         // The equation held in indexCalcHolder is essentially the flipped index from i after the topLength
         // this was done in leu of how it was wired, which was back to front on one side,
         // then front to back on the other side and vise versa for the bottom row.
+        if (amount > 0) {
+            amount += new Random().nextDouble() / 10;
+        }
+        for (int i = 0; i < chargeLength; i++) {
+            if (i <= topLength1) {
+                indexCalcHolder = i;
+            } else if (i <= topLength1 + topLength2) {
+                indexCalcHolder = Math.abs(i - topLength1 - topLength2) + 1;
+            } else if (i <= topLength1 + topLength2 + bottomLength1) {
+                indexCalcHolder = i - topLength1 - topLength2;
+            } else if (i <= topLength1 + topLength2 + bottomLength1 + bottomLength2) {
+                indexCalcHolder = Math.abs(i - topLength1 - topLength2 - bottomLength1 - bottomLength2) + 1; // inverted
+            }
+            // establishes a gradient for the LEDs
+            if (indexCalcHolder >= topLength1 * amount) {
+                mainLEDBuffer.setRGB(i, 0, 0, 0);
+            } else {
+                mainLEDBuffer.setRGB(i, indexCalcHolder * 7, 255 - indexCalcHolder * 7, 0);
+            }
 
-        for (int i = 1; i < chargeLength; i++) {
-            // if (i <= topLength1) {
-            //     indexCalcHolder = i;
-            // } else if (i <= topLength1 + topLength2) {
-            //     indexCalcHolder = Math.abs(i - topLength1 - topLength2) + 1; // inverted
-
-            // } else if (i <= topLength1 + topLength2 + bottomLength1) {
-            //     indexCalcHolder = i - topLength1 - topLength2;
-            // } else if (i <= topLength1 + topLength2 + bottomLength1 + bottomLength2) {
-            //     indexCalcHolder = Math.abs(i - topLength1 - topLength2 - bottomLength1 - bottomLength2) + 1; //
-            // inverted
-            // }
-
-            // if (indexCalcHolder > topLength1 * amount) {
-            //     mainLEDBuffer.setRGB(i, 0, 0, 0);
-            // } else {
-            //     if (indexCalcHolder < topLength1 / 3.) {
-            //         mainLEDBuffer.setRGB(i, 0, 255, 0);
-            //     } else if (indexCalcHolder < topLength1 * 2. / 3) {
-            //         mainLEDBuffer.setRGB(i, 255, 255, 0);
-            //     } else {
-            //         mainLEDBuffer.setRGB(i, 255, 0, 0);
-            //     }
-            // }
-
-            mainLEDBuffer.setRGB(i, 255, 255, 255);
+            
         }
     }
 
