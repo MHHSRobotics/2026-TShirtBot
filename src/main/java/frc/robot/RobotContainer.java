@@ -102,7 +102,7 @@ public class RobotContainer {
 
         if (Constants.turretEnabled) {
             turret.setDefaultCommand(
-                    turretCommands.setSpeed(() -> MathUtil.applyDeadband(controller.getRightX(), 0.1) / 100));
+                    turretCommands.setSpeed(() -> MathUtil.applyDeadband(controller.getRightX(), 0.1) / 10));
         }
         if (Constants.shooterEnabled) {
             controller

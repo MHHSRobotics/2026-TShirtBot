@@ -40,8 +40,6 @@ public class LEDS extends SubsystemBase {
         chargeUpLED.start();
     }
 
-
-
     public void setChargeLeds(double amount) {
 
         // The equation held in indexCalcHolder is essentially the flipped index from i after the topLength
