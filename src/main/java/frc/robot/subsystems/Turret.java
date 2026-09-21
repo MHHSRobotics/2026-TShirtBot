@@ -21,7 +21,6 @@ public class Turret extends SubsystemBase {
     public Turret(MotorIO motor) {
         // Initialize the TalonFX
         turretMotor = motor;
-
         // Sets the inverted value for the config
         turretMotor.setInverted(Constants.motorInverted);
     }
